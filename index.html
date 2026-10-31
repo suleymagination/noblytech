@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoblyTech | Data Analytics & Statistical Consulting</title>
+    <!-- Google Fonts for Clean Tech Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Primary Colors */
+            --bg-body: #fdfdfd;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            
+            /* Theme Dominants */
+            --brand-blue: #0284c7;
+            --brand-blue-hover: #0369a1;
+            --brand-blue-light: #f0f9ff;
+            --brand-green: #10b981;
+            --brand-green-light: #ecfdf5;
+            
+            /* Accent Colors */
+            --accent-red: #ef4444;
+            --accent-yellow: #f59e0b;
+            --accent-brown: #78350f;
+            
+            /* UI Elements */
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --code-bg: #1e293b;
+            --code-text: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        code, pre {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Container & Layout */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation Header */
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 2px solid var(--brand-blue);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span.highlight {
+            color: var(--brand-blue);
+        }
+
+        .logo-badge {
+            font-size: 0.75rem;
+            background-color: var(--brand-green-light);
+            color: var(--brand-green);
+            padding: 2px 8px;
+            border-radius: 12px;
+            border: 1px solid var(--brand-green);
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--brand-blue);
+        }
+
+        .nav-cta {
+            background-color: var(--brand-blue);
+            color: #ffffff !important;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600 !important;
+        }
+
+        .nav-cta:hover {
+            background-color: var(--brand-blue-hover);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            background: linear-gradient(180deg, var(--brand-blue-light) 0%, var(--bg-body) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: #0f172a;
+        }
+
+        .hero-title span {
+            color: var(--brand-blue);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--brand-blue);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--brand-blue-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--brand-green);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #059669;
+        }
+
+        /* Code Sample Terminal Visual */
+        .code-window {
+            background-color: var(--code-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+
+        .window-header {
+            background-color: #0f172a;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background-color: var(--accent-red); }
+        .dot-yellow { background-color: var(--accent-yellow); }
+        .dot-green { background-color: var(--brand-green); }
+
+        .window-title {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            font-family: 'Fira Code', monospace;
+            margin-left: 10px;
+        }
+
+        .window-body {
+            padding: 20px;
+            color: var(--code-text);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .keyword { color: #38bdf8; }
+        .string { color: #34d399; }
+        .comment { color: #64748b; font-style: italic; }
+
+        /* Audience Segments Section */
+        .services {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 35px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-corporate {
+            border-top: 4px solid var(--brand-blue);
+        }
+
+        .card-academic {
+            border-top: 4px solid var(--brand-green);
+        }
+
+        .card-tag {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .card-corporate .card-tag { color: var(--brand-blue); }
+        .card-academic .card-tag { color: var(--brand-green); }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #0f172a;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .card-list {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .card-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .card-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .card-corporate .card-list li::before { color: var(--brand-blue); }
+        .card-academic .card-list li::before { color: var(--brand-green); }
+
+        /* Workflow Section */
+        .workflow {
+            background-color: var(--brand-blue-light);
+            padding: 70px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .step-item {
+            background-color: var(--bg-card);
+            padding: 24px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .step-number {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--brand-blue);
+            margin-bottom: 8px;
+        }
+
+        .step-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .step-item p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h4 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            max-width: 320px;
+        }
+
+        .footer-links h5 {
+            color: white;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.88rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1e293b;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-grid, .cards-grid, .steps-grid, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">
+                Nobly<span class="highlight">Tech</span>
+                <span class="logo-badge">Data Science & Analytics</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#corporate">For Business</a></li>
+                    <li><a href="#academic">Bantuan Skripsi</a></li>
+                    <li><a href="#workflow">How It Works</a></li>
+                    <li><a href="https://wa.me/6285293512346?text=Halo%20Suleyman,%20saya%20ingin%20konsultasi%20layanan%20data%20NoblyTech." class="nav-cta" target="_blank">WhatsApp Me</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <h1 class="hero-title">On-Demand <span>Data Analytics</span> & Research Consulting</h1>
+                <p class="hero-subtitle">Transforming messy data into actionable insights for business projects, and helping university students master statistical analysis for their final thesis (skripsi).</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/6285293512346?text=Hello%20Suleyman,%20I%20would%20like%20to%20discuss%20a%20corporate%20data%20analytics%20project." class="btn btn-primary" target="_blank">Business Analytics</a>
+                    <a href="https://wa.me/6285293512346?text=Halo%20Suleyman,%20saya%20ingin%20konsultasi%20mengenai%20analisis%20data%20skripsi." class="btn btn-secondary" target="_blank">Bimbingan Skripsi</a>
+                </div>
+            </div>
+            
+            <!-- Code Window Visual -->
+            <div class="code-window">
+                <div class="window-header">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                    <span class="window-title">noblytech_analytics.py</span>
+                </div>
+                <div class="window-body">
+                    <p class="comment"># NoblyTech Data Pipeline</p>
+                    <p><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</p>
+                    <p><span class="keyword">import</span> noblytech <span class="keyword">as</span> nt</p>
+                    <br>
+                    <p>dataset = nt.load_project_data(source=<span class="string">"client_db"</span>)</p>
+                    <p>insights = nt.analyze(dataset, target=<span class="string">"ROI_Optimization"</span>)</p>
+                    <br>
+                    <p class="comment"># Contact Lead</p>
+                    <p>lead = nt.Contact(email=<span class="string">"suleyman@noblytech.com"</span>)</p>
+                    <p><span class="keyword">print</span>(<span class="string">"Status: Pipeline Ready [200 OK]"</span>)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dual Service Offerings -->
+    <section class="services container">
+        <div class="section-header">
+            <h2>Specialized Solutions for Every Client</h2>
+            <p>Select your category below to see how we can assist your specific data needs.</p>
+        </div>
+
+        <div class="cards-grid">
+            
+            <!-- Corporate Services -->
+            <div class="card card-corporate" id="corporate">
+                <span class="card-tag">For Enterprises & Startups</span>
+                <h3>Corporate Analytics Service</h3>
+                <p>Get executive-ready data analysis for short-term projects without the overhead costs of recruiting a full-time data team.</p>
+                
+                <ul class="card-list">
+                    <li>Custom Interactive Dashboards (Power BI, Tableau, Metabase)</li>
+                    <li>Ad-Hoc Business Intelligence & Trend Analysis</li>
+                    <li>Data Cleaning, ETL Pipelines & Process Automation</li>
+                    <li>Clear Executive Insights & Quantifiable Recommendations</li>
+                </ul>
+
+                <a href="https://wa.me/6285293512346?text=Hello%20Suleyman,%20I%20would%20like%20to%20discuss%20a%20corporate%20data%20analytics%20project." class="btn btn-primary" style="width: 100%; text-align: center;" target="_blank">Book Business Consultation</a>
+            </div>
+
+            <!-- Academic Services -->
+            <div class="card card-academic" id="academic">
+                <span class="card-tag">Untuk Mahasiswa (S1 / S2)</span>
+                <h3>Bantuan Analisis Data Skripsi</h3>
+                <p>Solusi profesional untuk olah data, interpretasi statistik, dan penyusunan bab hasil penelitian skripsi/tesis Anda secara tepat dan efisien.</p>
+                
+                <ul class="card-list">
+                    <li>Olah Data Statistik (SPSS, JASP, Python, R, PLS-SEM)</li>
+                    <li>Penyusunan Bab IV (Hasil) & Bab V (Pembahasan & Kesimpulan)</li>
+                    <li>Pembersihan Data, Format Tabel, & Bimbingan Cara Baca Hasil</li>
+                    <li>Penataan & Bimbingan Revisit Daftar Pustaka (Zotero/Mendeley)</li>
+                </ul>
+
+                <a href="https://wa.me/6285293512346?text=Halo%20Suleyman,%20saya%20ingin%20konsultasi%20mengenai%20analisis%20data%20skripsi." class="btn btn-secondary" style="width: 100%; text-align: center;" target="_blank">Konsultasi Skripsi via WhatsApp</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="workflow" id="workflow">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Working Process</h2>
+                <p>Transparent, fast, and structured execution from first discussion to delivery.</p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-number">01 / DISCUSS</div>
+                    <h4>Initial Consultation</h4>
+                    <p>Share your dataset, research questions, or project business requirements via email or WhatsApp.</p>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">02 / ANALYZE</div>
+                    <h4>Execution & Modeling</h4>
+                    <p>We process the data, perform statistical tests or modeling, and verify all mathematical outputs.</p>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">03 / DELIVER</div>
+                    <h4>Report & Explanation</h4>
+                    <p>Receive your completed dashboard, analytical report, or thesis text along with a clear walkthrough.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="contact">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <h4>NoblyTech</h4>
+                <p>Precision data analytics, research consulting, and statistical modeling. Based in Indonesia, servicing global clients and university students.</p>
+            </div>
+
+            <div class="footer-links">
+                <h5>Services</h5>
+                <ul>
+                    <li><a href="#corporate">Business Analytics</a></li>
+                    <li><a href="#academic">Analisis Skripsi</a></li>
+                    <li><a href="#corporate">Dashboard Creation</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h5>Direct Contact</h5>
+                <ul>
+                    <li><a href="mailto:suleyman@noblytech.com">suleyman@noblytech.com</a></li>
+                    <li><a href="https://wa.me/6285293512346" target="_blank">WhatsApp: +62 852-9351-2346</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container footer-bottom">
+            <p>&copy; 2026 NoblyTech. All rights reserved. Powered by Clean Data Science.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
